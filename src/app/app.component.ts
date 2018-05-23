@@ -12,7 +12,7 @@ export class AppComponent {
   returned;
 
   doGet() {
-    const url = 'http://localhost:3000/api';
+    const url = 'http://localhost:3000/calculate';
     this.httpClient.get(url).subscribe(res => {
       this.returned = res;
       return this.returned;

@@ -15,7 +15,7 @@ var searchPlace = (subStr) => {
         });
 };
 
-var calculateRoutes = (data) => {
+var calculateRoutes = (data, req) => {
     var tollRoad = data.params.tollRoad;
     var boatFerry = data.params.boatFery;
     var tunnel = data.params.tunnel;
@@ -65,6 +65,7 @@ var calculateRoutes = (data) => {
             });
         console.log(url);
     }
+
 };
 
 module.exports.calculateRoutes = calculateRoutes;

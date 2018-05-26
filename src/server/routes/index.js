@@ -8,35 +8,15 @@ router.get('/', (req, res, next) => {
     res.send('Home');
 });
 
-router.get('/calculate', (req, res, next) => {
+router.post('/calculate', (req, res, next) => {
 
-    var data = {
-        routes: [{
-            address: "Ankara, Türkiye",
-            lat: "39.920777",
-            lng: "32.854058"
-        },
-            {
-                address: "İzmir, Türkiye",
-                lat: "38.428702",
-                lng: "27.134476",
-            },
-            {
-                address: "Konya, Türkiye",
-                lat: "37.871357",
-                lng: "32.50058"
-            }],
-        params: {
-            tollRoad: true,
-            boatFery: true,
-            tunnel: true,
-            dirtRoad: true
-        }
-    };
-    services.calculateRoutes(data);
+    console.log("Body: " + req.body.data);
+    var data = req.body.data;
+    services.calculateRoutes(data, req);
+
 });
 
-router.get('/search',(req,res,next) => {
+router.get('/search', (req, res, next) => {
     return services.searchPlace(req.subStr);
 });
 

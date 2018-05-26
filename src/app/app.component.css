@@ -1,0 +1,281 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#map {
+    height: 100vh;
+    z-index: 0;
+    margin-top: 1px;
+}
+
+.left-bar {
+    height: 100vh;
+    font-size: 14px;
+    background: #2196F3;
+    padding: 16px;
+    overflow: auto;
+}
+
+.navbar {
+    background: #1976D2;
+    margin-top: -16px;
+    width: 100%;
+    height: 72px;
+}
+
+.navbar i {
+    color: white;
+}
+
+.navbar span {
+    color: white;
+    font-weight: 600;
+}
+
+.search-bar {
+    padding: 8px;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+    z-index: 5;
+    height: 72px;
+}
+
+label {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+input:focus {
+    outline: 0;
+}
+
+#search-container {
+    background-color: white;
+    margin: 0px -16px 24px -16px;
+}
+
+#calculate-button {
+    margin-top: 32px;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+#search-result-list {
+    padding: 0;
+}
+
+#search-textfield, #destination-textfield {
+    border-radius: 0px;
+    border: none;
+    width: 100%;
+}
+
+#search-result-list li {
+    list-style: none;
+    padding: 16px;
+    border-bottom: 0.5px solid #ccc;
+    background: white;
+    cursor: pointer;
+}
+
+#result-km {
+    margin-top: 16px;
+    display: block;
+    color: white;
+}
+
+#compare-icon {
+    margin-top: 12px;
+    font-size: 32px;
+    opacity: 0.54;
+}
+
+.text-input {
+    border: none;
+    background-color: #64B5F6;
+    color: white;
+    padding: 8px;
+    width: 100%;
+}
+
+.road-options {
+    position: relative;
+}
+
+.road-options i {
+    display: inline-block;
+    margin-top: 8px;
+    opacity: 0.5;
+    color: white;
+}
+
+.road-options label {
+    display: inline-block;
+    color: white;
+    position: relative;
+    margin-bottom: 16px;
+    padding: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #2196F3;
+    border-radius: 5px;
+    border-bottom: 1.8px ridge white;
+    border-top: 0.5px ridge white;
+    border-right: 1.8px ridge white;
+    border-left: 0.5px ridge white;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+    background-color: #e2e2e2;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.add-route {
+    padding: 16px 0;
+    color: white;
+}
+
+.add-route button {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background: white;
+    color: black;
+}
+
+.route-list {
+    margin-left: -56px;
+    margin-right: -16px;
+}
+
+.route-list li {
+    list-style: none;
+    background: #64B5F6;
+    padding: 16px;
+    color: white;
+}
+
+.route-list i {
+    width: 15px;
+    height: 15px;
+}
+
+.left-bar::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #F5F5F5;
+}
+
+.left-bar::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+.left-bar::-webkit-scrollbar-thumb {
+    background-color: #64B5F6;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%,
+    color-stop(.5, rgba(255, 255, 255, .2)),
+    color-stop(.5, transparent), to(transparent));
+}
+
+agm-map {
+    height: 100% !important;
+    width: 100% !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.road-options {
+    margin-top: 10%;
+}
+
+.roadTypeContainer {
+    margin-top: 10%;
+}
+
+#calculate-button {
+    margin-top: 15%;
+}
+
+#stopover-textfield {
+    width: 100%;
+    background: #2196F3;
+    color: white;
+    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, .25);
+    padding: 2%;
+    transition: all 0.2s ease-in-out;
+}
+
+#stopover-textfield::placeholder {
+    color: white;
+    opacity: 0.5;
+}
+
+#stopover-textfield:focus {
+    border-bottom: 2px solid white;
+}
+
+/*.left-bar {
+    border-right: 10px groove rgba(255,255,255,.50);
+}*/
+
+.navbar {
+    border-bottom: 10px inset rgba(255,255,255,.45);
+}
+
+.truck-route-icon {
+    line-height: 72px;
+    vertical-align: middle;
+}
+
+.footer {
+    color: rgba(255, 255, 255, .45);
+    margin-top: 135%;
+    font-size: 12px;
+}
+
+.footer-text {
+    padding-top: 1%;
+}

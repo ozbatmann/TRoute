@@ -10,14 +10,13 @@ router.get('/', (req, res, next) => {
 
 router.post('/calculate', (req, res, next) => {
 
-    console.log("Body: " + req.body.data);
-    var data = req.body.data;
-    services.calculateRoutes(data, req);
+    let data = req.body.data;
+    //services.calculateRoutes(data, req);
 
 });
 
-router.get('/search', (req, res, next) => {
-    return services.searchPlace(req.subStr);
+router.post('/search', (req, res, next) => {
+    return services.searchPlace(req.body.city);
 });
 
 

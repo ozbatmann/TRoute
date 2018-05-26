@@ -25,8 +25,8 @@
             <span id="result-km"></span>
             <div class="add-route">
                 <label for="stopover-textfield">Nereden - Nereye:</label>
-                <input type="text" id="stopover-textfield"
-                       placeholder=""/>
+                <input type="text" id="stopover-textfield" [(ngModel)]="city" (keyup)="searchCity()"
+                       placeholder="Şehir"/>
             </div>
             <div id="search-container">
                 <ul id="search-result-list"></ul>
@@ -57,7 +57,8 @@
                 </div>
             </div>
             <div class="truck-profile">
-                <button class="btn btn-primary" id="calculate-button" style="background: white; color: black;" (click)="doGet()">Rotayı
+                <button class="btn btn-primary" id="calculate-button" style="background: white; color: black;"
+                        (click)="doGet()">Rotayı
                     Hesapla
                 </button>
             </div>

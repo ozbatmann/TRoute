@@ -1,5 +1,5 @@
-import {Component, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {Component} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Component({
     selector: 'app-root',
@@ -12,24 +12,40 @@ export class AppComponent {
     }
 
     returned;
-
+    rootUrl = 'http://localhost:3000/';
+    _headers = new HttpHeaders();
     title = 'Truck Route';
-
-    // maps
     lat = 38.1188357;
     lng = 27.7014363;
-
+    city = '';
 
     getPath(): void {
-        const url = 'http://localhost:3000/api';
+        const url = this.rootUrl + 'api';
         this.httpClient.get(url).subscribe(res => {
             this.returned = res;
             return this.returned;
         });
     }
 
+    searchCity() {
+        const url = this.rootUrl + 'search';
+        const city = this.city;
+        const headers = this._headers.append('Content-Type', 'application/json');
+        const options = {
+            headers: headers,
+            observe: 'response' as 'body'
+        };
+
+        this.httpClient.post(url, {city}, options).subscribe(res => {
+            this.returned = res;
+            return this.returned;
+        });
+
+        console.log(this.returned);
+    }
+
     doGet() {
-        const url = 'http://localhost:3000/calculate';
+        const url = this.rootUrl + 'calculate';
 
         const data = {
             routes: [{

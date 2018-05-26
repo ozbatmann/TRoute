@@ -8,10 +8,10 @@ var googleMapsClient = require('@google/maps').createClient({
 var searchPlace = (subStr) => {
     googleMapsClient.placesAutoComplete({input: subStr, types: 'address', language: 'tr'}).asPromise()
         .then((response) => {
-           return response.json.predictions;
+            return response.json.predictions;
         })
         .catch((err) => {
-          return err;
+            return err;
         });
 };
 

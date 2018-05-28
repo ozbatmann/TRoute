@@ -15,7 +15,7 @@ var searchPlace = (subStr) => {
         });
 };
 
-var calculateRoutes = (data, req) => {
+var calculateRoutes = (data) => {
     var tollRoad = data.params.tollRoad;
     var boatFerry = data.params.boatFery;
     var tunnel = data.params.tunnel;
@@ -56,9 +56,11 @@ var calculateRoutes = (data, req) => {
         url += "&length=" + truck.length;
         url += "&truckRestrictionPenalty=" + truckRestrictionPenalty;
         url += "&language=tr-tr";
+
         axios.get(url)
             .then(response => {
                 console.log(response.data.response.route);
+                return 'ali'
             })
             .catch(error => {
                 console.log(error);

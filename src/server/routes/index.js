@@ -11,7 +11,8 @@ router.get('/', (req, res, next) => {
 router.post('/calculate', (req, res, next) => {
 
     let data = req.body.data;
-    //services.calculateRoutes(data, req);
+    res.body = services.calculateRoutes(data);
+    console.log(res.body);
 
 });
 

@@ -7,7 +7,7 @@ const app = express();
 app.set('port', (process.env.PORT || 3000));
 app.set('env', (process.env.NODE_ENV || "local"));
 
-var indexRouter = require('./routes/index');
+let indexRouter = require('./routes/index');
 
 app.use(bodyParser.json());
 app.use(function (req, res, next) {

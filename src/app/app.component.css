@@ -16,7 +16,7 @@ html, body {
     font-size: 14px;
     background: #2196F3;
     padding: 16px;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .navbar {
@@ -47,7 +47,7 @@ html, body {
 }
 
 label {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
 }
 
@@ -104,25 +104,6 @@ input:focus {
     width: 100%;
 }
 
-.road-options {
-    position: relative;
-}
-
-.road-options i {
-    display: inline-block;
-    margin-top: 8px;
-    opacity: 0.5;
-    color: white;
-}
-
-.road-options label {
-    display: inline-block;
-    color: white;
-    position: relative;
-    margin-bottom: 16px;
-    padding: 0;
-}
-
 .checkmark {
     position: absolute;
     top: 0;
@@ -132,9 +113,9 @@ input:focus {
     background-color: #2196F3;
     border-radius: 5px;
     border-bottom: 1.8px ridge white;
-    border-top: 0.5px ridge white;
+    border-top: 1px ridge white;
     border-right: 1.8px ridge white;
-    border-left: 0.5px ridge white;
+    border-left: 1px ridge white;
 }
 
 /* On mouse-over, add a grey background color */
@@ -173,7 +154,7 @@ input:focus {
 }
 
 .add-route {
-    padding: 16px 0;
+    padding: 7% 0;
     color: white;
 }
 
@@ -257,10 +238,6 @@ agm-map {
     border-bottom: 2px solid white;
 }
 
-/*.left-bar {
-    border-right: 10px groove rgba(255,255,255,.50);
-}*/
-
 .navbar {
     border-bottom: 10px inset rgba(255,255,255,.45);
 }
@@ -272,10 +249,36 @@ agm-map {
 
 .footer {
     color: rgba(255, 255, 255, .45);
-    margin-top: 135%;
+    margin-top: 130%;
     font-size: 12px;
 }
 
 .footer-text {
     padding-top: 1%;
 }
+
+.road-options {
+    position: relative;
+}
+
+.road-options i {
+    display: inline-block;
+    opacity: 0.5;
+    color: white;
+}
+
+.road-options label {
+    display: inline-block;
+    color: white;
+    position: relative;
+    padding: 2.3%;
+    border-left: 2px solid #2196F3;
+}
+
+.road-options label:hover {
+    border-left: 2px solid rgba(255, 255, 255, .50);
+}
+
+/*.left-bar {
+    border-right: 10px groove rgba(255,255,255,.25);
+}*/

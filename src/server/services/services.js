@@ -60,7 +60,7 @@ var calculateRoutes = (data) => {
         axios.get(url)
             .then(response => {
                 console.log(response.data.response.route);
-                return 'ali'
+                return response.data.response.route;
             })
             .catch(error => {
                 console.log(error);

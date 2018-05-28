@@ -71,15 +71,20 @@
                 </div>
             </div>
         </div>
+
         <div class="col-lg-10">
             <agm-map [latitude]="lat" [longitude]="lng">
-                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                <!--<agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>-->
+                <agm-direction *ngIf="dir"
+                               [origin]="dir.origin"
+                               [destination]="dir.destination"
+                               [travelMode]=""></agm-direction>
             </agm-map>
         </div>
     </div>
 </div>
 </body>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/core.js"></script>-->
+
 
 
 

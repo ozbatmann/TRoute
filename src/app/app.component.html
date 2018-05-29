@@ -22,7 +22,7 @@
                 </div>
             </div>
 
-            <span id="result-km"></span>
+            <span id="result-km">Toplam uzaklık: {{totalDistance}}</span>
             <div class="add-route">
                 <label for="stopover-textfield">Nereden - Nereye:</label>
                 <input type="text" id="stopover-textfield" [(ngModel)]="city" (keyup)="searchCity()"
@@ -74,11 +74,16 @@
 
         <div class="col-lg-10">
             <agm-map [latitude]="lat" [longitude]="lng">
-                <!--<agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>-->
-                <agm-direction *ngIf="dir"
-                               [origin]="dir.origin"
-                               [destination]="dir.destination"
-                               [travelMode]=""></agm-direction>
+                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                <div *ngFor="let path of dir">
+                    <agm-direction *ngIf="dir"
+                                   [origin]="path.origin"
+                                   [destination]="path.destination"
+                                   [travelMode]="path.travelMode"
+                                   [waypoints]="path.waypoints">
+                    </agm-direction>
+                </div>
+
             </agm-map>
         </div>
     </div>

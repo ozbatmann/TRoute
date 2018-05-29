@@ -64,7 +64,7 @@ var calculateRoutes = async (data) => {
         try {
             var response = await axios.get(url);
             routesArr.push(response.data.response.route);
-        }catch (e) {
+        } catch (e) {
             resultArr.opStatus = false;
             resultArr.opMessage = "Servise Ulaşılamadı";
         }

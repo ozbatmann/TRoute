@@ -15,7 +15,10 @@ var searchPlace = (subStr) => {
         });
 };
 
-var calculateRoutes = (data) => {
+var calculateRoutes = async (data) => {
+    const resultArr = {};
+    var routesArr = new Array();
+    resultArr.opStatus = true;
     var tollRoad = data.params.tollRoad;
     var boatFerry = data.params.boatFery;
     var tunnel = data.params.tunnel;
@@ -56,19 +59,20 @@ var calculateRoutes = (data) => {
         url += "&length=" + truck.length;
         url += "&truckRestrictionPenalty=" + truckRestrictionPenalty;
         url += "&language=tr-tr";
-
-        axios.get(url)
-            .then(response => {
-                console.log(response.data.response.route);
-                return response.data.response.route;
-            })
-            .catch(error => {
-                console.log(error);
-            });
         console.log(url);
-    }
 
+        try {
+            var response = await axios.get(url);
+            routesArr.push(response.data.response.route);
+        }catch (e) {
+            resultArr.opStatus = false;
+            resultArr.opMessage = "Servise Ulaşılamadı";
+        }
+    }
+    resultArr.result = routesArr;
+    return resultArr;
 };
+
 
 module.exports.calculateRoutes = calculateRoutes;
 module.exports.searchPlace = searchPlace;

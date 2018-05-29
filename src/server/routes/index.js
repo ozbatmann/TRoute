@@ -17,8 +17,10 @@ router.post('/calculate', (req, res, next) => {
 
 });
 
-router.post('/search', (req, res, next) => {
-    return services.searchPlace(req.body.city);
+router.post('/search', (req, res, next)=> {
+    services.searchPlace(req.body.city).then((predictions) => {
+        res.send(predictions);
+    });
 });
 
 module.exports = router;

@@ -16,7 +16,7 @@ html, body {
     font-size: 14px;
     background: #2196F3;
     padding: 16px;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .navbar {
@@ -277,4 +277,13 @@ agm-map {
 
 .road-options label:hover {
     border-left: 2px solid rgba(255, 255, 255, .50);
+}
+
+li:nth-child(odd) {
+    background-color: #111;
+    color: #000;
+}
+li:nth-child(even) {
+    background-color:#64B5F6;
+    color: #F5F5F5;
 }

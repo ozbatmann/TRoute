@@ -27,6 +27,31 @@
                 <label for="stopover-textfield">Nereden - Nereye:</label>
                 <input type="text" id="stopover-textfield" [(ngModel)]="city" (keyup)="searchCity()"
                        placeholder="Şehir"/>
+                <ul class="results" style="list-style-type: none; display: inline" *ngIf="observeSearchText()">
+                    <li>
+                        <a
+                                class="list-group-item"
+                                style="cursor: pointer;color: #000; font-size: 12px"
+                                *ngFor="let place of places"
+                                (click)="putIntoArray(place)">
+                            {{ place.description }}
+                        </a>
+                    </li>
+                </ul>
+                <br>
+                <ul class="results" style="list-style-type: none; display: inline">
+                    <li>
+                        <a
+                                class="list-group-item"
+                                style="cursor: pointer;color: #000; font-size: 12px"
+                                *ngFor="let address of addressArray">
+                            {{ address.description }}
+                            <i class="material-icons">clear</i>
+                        </a>
+                    </li>
+
+
+                </ul>
             </div>
             <div id="search-container">
                 <ul id="search-result-list"></ul>

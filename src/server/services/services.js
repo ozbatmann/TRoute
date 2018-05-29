@@ -5,14 +5,10 @@ var googleMapsClient = require('@google/maps').createClient({
     Promise: Promise
 });
 
-var searchPlace = (subStr) => {
-    googleMapsClient.placesAutoComplete({input: subStr, types: 'address', language: 'tr'}).asPromise()
-        .then((response) => {
-            return response.json.predictions;
-        })
-        .catch((err) => {
-            return err;
-        });
+var searchPlace = async (subStr) => {
+    var searchResult;
+    searchResult = await googleMapsClient.placesAutoComplete({input: subStr, types: 'address', language: 'tr'}).asPromise();
+    return searchResult
 };
 
 var calculateRoutes = async (data) => {
@@ -24,14 +20,34 @@ var calculateRoutes = async (data) => {
     var tunnel = data.params.tunnel;
     var dirtRoad = data.params.dirtRoad;
 
-    for (var i = 0; i < data.routes.length - 1; i++) {
+    nodes = [];
+
+    for (var i = 0; i < data.routes.length;i++){
+        var geoCodeResponse = await googleMapsClient.geocode({address:data.routes[i].description}).asPromise();
+
+        var lat = geoCodeResponse.json.results[0].geometry.location.lat;
+        var lng = geoCodeResponse.json.results[0].geometry.location.lng;
+
+        var routeObj = {
+            address:data.routes[i].description,
+            lat:lat,
+            lng:lng
+        };
+
+        nodes.push({routes:routeObj})
+
+    }
+
+    for (var i = 0; i < nodes.length - 1; i++) {
+
+
 
         var truckRestrictionPenalty = "strict";
 
         var url = "https://route.cit.api.here.com/routing/7.2/calculateroute.json?app_id=VOxyVH1xVASAQFZnuq6F&app_code=Qp6kUzEAaJNY6qlLl1zC8Q";
 
-        url += "&waypoint0=geo!" + data.routes[i].lat + "," + data.routes[i].lng;
-        url += "&waypoint1=geo!" + data.routes[i + 1].lat + "," + data.routes[i + 1].lng;
+        url += "&waypoint0=geo!" + nodes[i].routes.lat + "," +  nodes[i].routes.lng ;
+        url += "&waypoint1=geo!" +  nodes[i+1].routes.lat  + "," +  nodes[i+1].routes.lng ;
 
         url += "&mode=fastest;truck;traffic:disabled;";
 

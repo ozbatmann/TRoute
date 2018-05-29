@@ -11,7 +11,9 @@ export class AppComponent implements AfterViewInit {
 
     constructor(private httpClient: HttpClient) {
     }
-
+    addressArray = [];
+    places = [];
+    showList = false;
     returned;
     rootUrl = 'http://localhost:3000/';
     _headers = new HttpHeaders();
@@ -117,21 +119,43 @@ export class AppComponent implements AfterViewInit {
             headers: headers,
             observe: 'response' as 'body'
         };
-
-        this.httpClient.post(url, {city}, options).subscribe(res => {
-            console.log(res);
-        });
+        if(this.city.length >= 3) {
+            this.httpClient.post(url, {city}, options).subscribe(res => {
+                this.places = res.body.json.predictions;
+                this.showList = true;
+                console.log(this.places);
+            });
+        }
     }
 
     doGet() {
         const url = this.rootUrl + 'calculate';
-        const data = this.nodes;
+        const data = {
+            routes:this.addressArray,
+            params: {
+                tollRoad: true,
+                boatFery: true,
+                tunnel: true,
+                dirtRoad: true
+            }
+        };
 
         this.httpClient.post(url, {data}).subscribe(res => {
             let coordinates = res.result;
             console.log(coordinates);
-            this.processResponse(coordinates);
         });
     }
 
+    observeSearchText() {
+        if(this.city === "") {
+            this.showList = false;
+        }
+        return this.showList
+    }
+
+    putIntoArray(address){
+        this.addressArray.push(address);
+        this.places = [];
+        this.city = "";
+    }
 }

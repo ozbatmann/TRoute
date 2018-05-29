@@ -2,7 +2,7 @@
 <head xmlns="">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>{{ title }}</title>
+    <title>{{ texts.title }}</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
@@ -17,40 +17,46 @@
                     <i class="material-icons pull-left">menu</i>
                     <div class="pull-right">
                         <i class="material-icons truck-route-icon">map</i>
-                        <span style="line-height: 72px; vertical-align: middle;"> {{ title }}</span>
+                        <span style="line-height: 72px; vertical-align: middle;"> {{ texts.title }}</span>
                     </div>
                 </div>
             </div>
 
-            <span id="result-km">Toplam uzaklık: {{totalDistance}}</span>
+            <span id="result-km">Toplam uzaklık: {{totalDistance}} km</span>
             <div class="add-route">
-                <label for="stopover-textfield">Nereden - Nereye:</label>
+                <label for="stopover-textfield">{{texts.stopover}}</label>
                 <input type="text" id="stopover-textfield" [(ngModel)]="city" (keyup)="searchCity()"
-                       placeholder="Şehir"/>
-                <ul class="results" style="list-style-type: none; display: inline" *ngIf="observeSearchText()">
+                       placeholder="{{texts.city}}"/>
+                <ul class="results" *ngIf="observeSearchText()">
                     <li>
-                        <a
-                                class="list-group-item"
-                                style="cursor: pointer;color: #000; font-size: 12px"
-                                *ngFor="let place of places"
-                                (click)="putIntoArray(place)">
+                        <a style="border-radius: 0"
+                           class="list-group-item list-address-item"
+                           *ngFor="let place of places"
+                           (click)="putIntoArray(place)">
                             {{ place.description }}
                         </a>
                     </li>
                 </ul>
-                <br>
-                <ul class="results" style="list-style-type: none; display: inline">
+                <ul class="results">
                     <li>
-                        <a
-                                class="list-group-item"
-                                style="cursor: pointer;color: #000; font-size: 12px"
-                                *ngFor="let address of addressArray">
-                            {{ address.description }}
-                            <i class="material-icons">clear</i>
+                        <a style="border-radius: 0"
+                           class="list-group-item"
+                           *ngFor="let address of addressArray">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <i class="material-icons" style="padding-right: 20px">location_on</i>
+                                    </td>
+                                    <td>
+                                        {{ address.description }}
+                                    </td>
+                                    <td>
+                                        <i class="material-icons clearButton" style="padding-left: 20px">clear</i>
+                                    </td>
+                                </tr>
+                            </table>
                         </a>
                     </li>
-
-
                 </ul>
             </div>
             <div id="search-container">
@@ -61,21 +67,21 @@
                 <ul class="route-list"></ul>
             </div>
             <div class="road-options">
-                <h5 style="opacity: 0.5; color: white;">Yol Profili</h5>
+                <h5 style="opacity: 0.5; color: white;">{{texts.roadProfile}}</h5>
                 <div class="roadTypeContainer">
-                    <label class="container">Paralı Yol
+                    <label class="container">{{texts.roadTypes.paidRoad}}
                         <input ngModel="paidRoad" type="checkbox" style="display: none;" id="tollRoad">
                         <span class="checkmark"></span>
                     </label>
-                    <label class="container">Feribot
+                    <label class="container">{{texts.roadTypes.ferry}}
                         <input ngModel="ferry" type="checkbox" style="display: none;" id="boatFerry">
                         <span class="checkmark"></span>
                     </label>
-                    <label class="container">Tünel
+                    <label class="container">{{texts.roadTypes.tunnel}}
                         <input ngModel="tunnel" type="checkbox" style="display: none;" id="tunnel">
                         <span class="checkmark"></span>
                     </label>
-                    <label class="container">Topraklı Yol
+                    <label class="container">{{texts.roadTypes.groundRoad}}
                         <input ngModel="groundRoad" type="checkbox" style="display: none;" id="dirtRoad">
                         <span class="checkmark"></span>
                     </label>
@@ -83,8 +89,7 @@
             </div>
             <div class="truck-profile">
                 <button class="btn btn-primary" id="calculate-button" style="background: white; color: black;"
-                        (click)="doGet()">Rotayı
-                    Hesapla
+                        (click)="doGet()">{{texts.calculateRoute}}
                 </button>
             </div>
             <div class="row footer">
@@ -92,14 +97,17 @@
                     <i id="truck-route-icon-bottom" class="material-icons">map</i>
                 </div>
                 <div class="col-sm-8 footer-text">
-                    <p>All rights reserved.</p>
+                    <p>{{texts.footerText}}</p>
                 </div>
             </div>
         </div>
 
         <div class="col-lg-10">
-            <agm-map [latitude]="lat" [longitude]="lng">
-                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+            <agm-map [latitude]="currentLocation.lat" [longitude]="currentLocation.lng" [zoom]="7">
+                <div *ngIf="displayMarker">
+                    <agm-marker [latitude]="currentLocation.lat" [longitude]="currentLocation.lng"></agm-marker>
+                </div>
+
                 <div *ngFor="let path of dir">
                     <agm-direction *ngIf="dir"
                                    [origin]="path.origin"

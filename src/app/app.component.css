@@ -85,7 +85,7 @@ input:focus {
 }
 
 #result-km {
-    margin-top: 16px;
+    margin-top: 5%;
     display: block;
     color: white;
 }
@@ -239,7 +239,7 @@ agm-map {
 }
 
 .navbar {
-    border-bottom: 10px inset rgba(255,255,255,.45);
+    border-bottom: 10px inset rgba(255, 255, 255, .45);
 }
 
 .truck-route-icon {
@@ -283,7 +283,35 @@ li:nth-child(odd) {
     background-color: #111;
     color: #000;
 }
+
 li:nth-child(even) {
-    background-color:#64B5F6;
+    background-color: #64B5F6;
     color: #F5F5F5;
 }
+
+.results {
+    border: none;
+    list-style-type: none;
+    display: inline;
+}
+
+.list-group-item {
+    cursor: pointer;
+    color: white !important;
+    font-size: 12px;
+    background-color: #64B5F6;
+    border-radius: 5px;
+}
+
+.list-address-item:hover {
+    font-weight: bold;
+}
+
+/*.clearButton {
+
+}
+
+.clearButton:hover {
+    border: 1px solid white;
+    border-radius: 50px;
+}*/

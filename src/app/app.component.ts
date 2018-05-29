@@ -10,16 +10,36 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 export class AppComponent implements AfterViewInit {
 
     constructor(private httpClient: HttpClient) {
+        navigator.geolocation.getCurrentPosition(position => {
+            this.currentLocation.lng = +position.coords.longitude;
+            this.currentLocation.lat = +position.coords.latitude;
+        });
     }
+
     addressArray = [];
     places = [];
     showList = false;
     returned;
+    texts = {
+        title: 'Truck Route',
+        stopover: 'Nereden - Nereye:',
+        roadProfile: 'Yol Profili',
+        roadTypes: {
+            paidRoad: 'Paralı Yol',
+            ferry: 'Feribot',
+            tunnel: 'Tünel',
+            groundRoad: 'Topraklı Yol'
+        },
+        calculateRoute: 'Rotayı Hesapla',
+        city: 'Şehir',
+        footerText: 'All rights reserved.'
+    };
     rootUrl = 'http://localhost:3000/';
     _headers = new HttpHeaders();
-    title = 'Truck Route';
-    lat = 38.1188357;
-    lng = 27.7014363;
+    currentLocation = {
+        lat: null,
+        lng: null
+    };
     city = '';
     nodes = {
         routes: [{
@@ -27,11 +47,6 @@ export class AppComponent implements AfterViewInit {
             lat: '39.920777',
             lng: '32.854058'
         },
-            {
-                address: 'İzmir, Türkiye',
-                lat: '38.428702',
-                lng: '27.134476',
-            },
             {
                 address: 'Konya, Türkiye',
                 lat: '37.871357',
@@ -44,7 +59,6 @@ export class AppComponent implements AfterViewInit {
             dirtRoad: true
         }
     };
-
     dir = [{
         origin: {
             lat: null,
@@ -55,10 +69,10 @@ export class AppComponent implements AfterViewInit {
             lng: null
         },
         waypoints: [],
-        travelMode: 'DRIVING'
+        travelMode: null
     }];
-
     totalDistance = 0;
+    displayMarker = true;
 
     ngAfterViewInit() {
     }
@@ -76,15 +90,24 @@ export class AppComponent implements AfterViewInit {
             const mappedStartPosition = leg[0].start.mappedPosition;
             const mappedEndPosition = leg[0].end.mappedPosition;
 
-            let startPoint = {lat: mappedStartPosition.latitude, lng: mappedStartPosition.longitude};
-            let endPoint = {lat: mappedEndPosition.latitude, lng: mappedEndPosition.longitude};
+            let startPoint = {
+                lat: mappedStartPosition.latitude,
+                lng: mappedStartPosition.longitude
+            };
+            let endPoint = {
+                lat: mappedEndPosition.latitude,
+                lng: mappedEndPosition.longitude
+            };
 
             const maneuvers = leg[0].maneuver;
             const lastIndex = maneuvers.length < 23 ? maneuvers.length : 23;
 
             for (let i = 0; i < lastIndex; i++) {
                 let position = maneuvers[i].position;
-                let waypoint = {lat: position.latitude, lng: position.longitude};
+                let waypoint = {
+                    lat: position.latitude,
+                    lng: position.longitude
+                };
 
                 waypts.push({
                     location: waypoint,
@@ -103,14 +126,6 @@ export class AppComponent implements AfterViewInit {
         }
     }
 
-    getPath(): void {
-        const url = this.rootUrl + 'api';
-        this.httpClient.get(url).subscribe(res => {
-            this.returned = res;
-            return this.returned;
-        });
-    }
-
     searchCity() {
         const url = this.rootUrl + 'search';
         const city = this.city;
@@ -119,7 +134,7 @@ export class AppComponent implements AfterViewInit {
             headers: headers,
             observe: 'response' as 'body'
         };
-        if(this.city.length >= 3) {
+        if (this.city.length >= 3) {
             this.httpClient.post(url, {city}, options).subscribe(res => {
                 this.places = res.body.json.predictions;
                 this.showList = true;
@@ -131,7 +146,7 @@ export class AppComponent implements AfterViewInit {
     doGet() {
         const url = this.rootUrl + 'calculate';
         const data = {
-            routes:this.addressArray,
+            routes: this.addressArray,
             params: {
                 tollRoad: true,
                 boatFery: true,
@@ -141,21 +156,32 @@ export class AppComponent implements AfterViewInit {
         };
 
         this.httpClient.post(url, {data}).subscribe(res => {
-            let coordinates = res.result;
-            console.log(coordinates);
+
+            if (res.opStatus === true) {
+
+                let coordinates = res.result;
+                coordinates.length > 0 ? this.displayMarker = false : this.displayMarker = true;
+                this.processResponse(coordinates);
+
+            } else {
+
+                this.displayMarker = true;
+
+            }
+
         });
     }
 
     observeSearchText() {
-        if(this.city === "") {
+        if (this.city === '') {
             this.showList = false;
         }
-        return this.showList
+        return this.showList;
     }
 
-    putIntoArray(address){
+    putIntoArray(address) {
         this.addressArray.push(address);
         this.places = [];
-        this.city = "";
+        this.city = '';
     }
 }

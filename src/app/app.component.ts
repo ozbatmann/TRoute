@@ -31,7 +31,7 @@ export class AppComponent implements AfterViewInit {
             groundRoad: 'Topraklı Yol'
         },
         calculateRoute: 'Rotayı Hesapla',
-        city: 'Şehir',
+        address: 'Adres',
         footerText: 'All rights reserved.',
         clear: 'Temizle'
     };
@@ -174,5 +174,6 @@ export class AppComponent implements AfterViewInit {
         this.addressArray = [];
         this.totalDistance = 0;
         this.showClearButton = true;
+        this.displayMarker = true;
     }
 }

@@ -225,6 +225,10 @@ agm-map {
     margin-top: 15%;
 }
 
+#calculate-button:hover {
+    cursor: pointer;
+}
+
 #stopover-textfield {
     width: 100%;
     background: #2196F3;

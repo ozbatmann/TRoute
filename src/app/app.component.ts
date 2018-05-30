@@ -1,5 +1,6 @@
 import {AfterViewInit, Component} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
     selector: 'app-root',
@@ -19,7 +20,6 @@ export class AppComponent implements AfterViewInit {
     addressArray = [];
     places = [];
     showList = false;
-    returned;
     texts = {
         title: 'Truck Route',
         stopover: 'Nereden - Nereye:',
@@ -32,7 +32,8 @@ export class AppComponent implements AfterViewInit {
         },
         calculateRoute: 'Rotayı Hesapla',
         city: 'Şehir',
-        footerText: 'All rights reserved.'
+        footerText: 'All rights reserved.',
+        clear: 'Temizle'
     };
     rootUrl = 'http://localhost:3000/';
     _headers = new HttpHeaders();
@@ -41,38 +42,11 @@ export class AppComponent implements AfterViewInit {
         lng: null
     };
     city = '';
-    nodes = {
-        routes: [{
-            address: 'Ankara, Türkiye',
-            lat: '39.920777',
-            lng: '32.854058'
-        },
-            {
-                address: 'Konya, Türkiye',
-                lat: '37.871357',
-                lng: '32.50058'
-            }],
-        params: {
-            tollRoad: true,
-            boatFery: true,
-            tunnel: true,
-            dirtRoad: true
-        }
-    };
-    dir = [{
-        origin: {
-            lat: null,
-            lng: null
-        },
-        destination: {
-            lat: null,
-            lng: null
-        },
-        waypoints: [],
-        travelMode: null
-    }];
+    dir = [];
     totalDistance = 0;
     displayMarker = true;
+    showClearButton = true;
+    zoom = 7;
 
     ngAfterViewInit() {
     }
@@ -119,7 +93,8 @@ export class AppComponent implements AfterViewInit {
                 origin: startPoint,
                 destination: endPoint,
                 waypoints: waypts,
-                travelMode: 'DRIVING'
+                travelMode: 'DRIVING',
+                visible: true
             };
 
             this.dir.push(path);
@@ -136,9 +111,9 @@ export class AppComponent implements AfterViewInit {
         };
         if (this.city.length >= 3) {
             this.httpClient.post(url, {city}, options).subscribe(res => {
-                this.places = res.body.json.predictions;
+                let response = res;
+                this.places = response.body.json.predictions;
                 this.showList = true;
-                console.log(this.places);
             });
         }
     }
@@ -157,14 +132,17 @@ export class AppComponent implements AfterViewInit {
 
         this.httpClient.post(url, {data}).subscribe(res => {
 
-            if (res.opStatus === true) {
+            let response = res;
+            this.showClearButton = false;
 
-                let coordinates = res.result;
+            if (response.opStatus === true) {
+                let coordinates = response.result;
                 coordinates.length > 0 ? this.displayMarker = false : this.displayMarker = true;
                 this.processResponse(coordinates);
 
             } else {
 
+                this.showClearButton = true;
                 this.displayMarker = true;
 
             }
@@ -183,5 +161,18 @@ export class AppComponent implements AfterViewInit {
         this.addressArray.push(address);
         this.places = [];
         this.city = '';
+    }
+
+    popFromArray(index) {
+        this.addressArray.splice(index, 1);
+    }
+
+    clearDirection() {
+        for (let i = 0; i < this.dir.length; i++) {
+            this.dir[i].visible = false;
+        }
+        this.addressArray = [];
+        this.totalDistance = 0;
+        this.showClearButton = true;
     }
 }

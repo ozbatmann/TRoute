@@ -24,7 +24,14 @@
 
             <span id="result-km">Toplam uzaklık: {{totalDistance}} km</span>
             <div class="add-route">
-                <label for="stopover-textfield">{{texts.stopover}}</label>
+                <div class="row stopoverContainer">
+                    <div class="col-sm-9 whereToWhere">
+                        {{texts.stopover}}
+                    </div>
+                    <div class="col-sm-3 clearAll" (click)="clearDirection()">
+                        {{texts.clear}}
+                    </div>
+                </div>
                 <input type="text" id="stopover-textfield" [(ngModel)]="city" (keyup)="searchCity()"
                        placeholder="{{texts.city}}"/>
                 <ul class="results" *ngIf="observeSearchText()">
@@ -41,20 +48,18 @@
                     <li>
                         <a style="border-radius: 0"
                            class="list-group-item"
-                           *ngFor="let address of addressArray">
-                            <table>
-                                <tr>
-                                    <td>
-                                        <i class="material-icons" style="padding-right: 20px">location_on</i>
-                                    </td>
-                                    <td>
-                                        {{ address.description }}
-                                    </td>
-                                    <td>
-                                        <i class="material-icons clearButton" style="padding-left: 20px">clear</i>
-                                    </td>
-                                </tr>
-                            </table>
+                           *ngFor="let address of addressArray; let i = index">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <i class="material-icons">location_on</i>
+                                </div>
+                                <div class="col-sm-8">
+                                    {{ address.description }}
+                                </div>
+                                <div class="col-sm-2" *ngIf="showClearButton">
+                                    <i class="material-icons clearButton" (click)="popFromArray(i)">clear</i>
+                                </div>
+                            </div>
                         </a>
                     </li>
                 </ul>
@@ -103,7 +108,7 @@
         </div>
 
         <div class="col-lg-10">
-            <agm-map [latitude]="currentLocation.lat" [longitude]="currentLocation.lng" [zoom]="7">
+            <agm-map [latitude]="currentLocation.lat" [longitude]="currentLocation.lng" [zoom]="zoom">
                 <div *ngIf="displayMarker">
                     <agm-marker [latitude]="currentLocation.lat" [longitude]="currentLocation.lng"></agm-marker>
                 </div>
@@ -113,7 +118,8 @@
                                    [origin]="path.origin"
                                    [destination]="path.destination"
                                    [travelMode]="path.travelMode"
-                                   [waypoints]="path.waypoints">
+                                   [waypoints]="path.waypoints"
+                                   [visible]="path.visible">
                     </agm-direction>
                 </div>
 

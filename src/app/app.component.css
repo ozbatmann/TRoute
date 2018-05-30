@@ -15,7 +15,7 @@ html, body {
     height: 100vh;
     font-size: 14px;
     background: #2196F3;
-    padding: 16px;
+    padding: 15px;
     overflow: auto;
 }
 
@@ -46,11 +46,6 @@ html, body {
     height: 72px;
 }
 
-label {
-    font-size: 14px;
-    font-weight: 700;
-}
-
 input:focus {
     outline: 0;
 }
@@ -61,9 +56,14 @@ input:focus {
 }
 
 #calculate-button {
-    margin-top: 32px;
-    margin-bottom: 16px;
+    margin-top: 20%;
+    margin-bottom: 10%;
     width: 100%;
+    border-radius: 15px;
+}
+
+#calculate-button:hover {
+    border: 2px inset #2196F3;
 }
 
 #search-result-list {
@@ -156,6 +156,7 @@ input:focus {
 .add-route {
     padding: 7% 0;
     color: white;
+    margin-top: 10%;
 }
 
 .add-route button {
@@ -212,7 +213,12 @@ agm-map {
 }
 
 .roadTypeContainer {
+    font-weight: 700;
     margin-top: 10%;
+}
+
+.container:hover {
+    cursor: pointer;
 }
 
 #calculate-button {
@@ -307,11 +313,48 @@ li:nth-child(even) {
     font-weight: bold;
 }
 
-/*.clearButton {
-
+.clearButton {
+    border: 1px solid #64B5F6;
+    border-radius: 50px;
 }
 
 .clearButton:hover {
-    border: 1px solid white;
+    background: #F5F5F5;
+    color: #64B5F6;
+}
+
+.clearAllButton {
+    border: 1px solid #2196F3;
     border-radius: 50px;
-}*/
+    margin-top: -2px;
+}
+
+.clearAllButton:hover {
+    cursor: pointer;
+    background: #F5F5F5;
+    color: #2196F3;
+}
+
+.stopoverContainer {
+    padding-bottom: 10%;
+}
+
+.whereToWhere {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.clearAll {
+    color: #F5F5F5;
+    font-weight: 500;
+    border-bottom: 1px solid #2196F3;
+}
+
+.clearAll:hover {
+    cursor: pointer;
+    font-weight: 700;
+}
+
+
+
+

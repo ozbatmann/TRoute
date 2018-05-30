@@ -111,7 +111,7 @@ export class AppComponent implements AfterViewInit {
         };
         if (this.city.length >= 3) {
             this.httpClient.post(url, {city}, options).subscribe(res => {
-                let response = res;
+                let response: any = res;
                 this.places = response.body.json.predictions;
                 this.showList = true;
             });
@@ -132,7 +132,7 @@ export class AppComponent implements AfterViewInit {
 
         this.httpClient.post(url, {data}).subscribe(res => {
 
-            let response = res;
+            let response: any = res;
             this.showClearButton = false;
 
             if (response.opStatus === true) {

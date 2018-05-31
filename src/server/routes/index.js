@@ -10,11 +10,11 @@ router.get('/', (req, res, next) => {
 
 router.post('/calculate', (req, res, next) => {
 
-    let data = req.body.data;
+    var data = req.body.data;
     services.calculateRoutes(data).then((resultArray) => {
         res.send(resultArray);
-    }).catch((e) => {
-       res.send(e);
+    }).catch((error) => {
+        res.status(500).json(error);
     });
 
 });
@@ -22,8 +22,8 @@ router.post('/calculate', (req, res, next) => {
 router.post('/search', (req, res, next) => {
     services.searchPlace(req.body.city).then((predictions) => {
         res.send(predictions)
-    }).catch((e) => {
-        res.send(e);
+    }).catch((error) => {
+        res.status(500).json(error);
     });
 });
 

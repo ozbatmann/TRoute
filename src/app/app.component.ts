@@ -1,6 +1,6 @@
 import {AfterViewInit, Component} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {forEach} from '@angular/router/src/utils/collection';
+import 'rxjs/add/operator/catch';
 
 @Component({
     selector: 'app-root',
@@ -47,6 +47,10 @@ export class AppComponent implements AfterViewInit {
     displayMarker = true;
     showClearButton = true;
     zoom = 7;
+    tollRoad = true;
+    boatFery = true;
+    tunnel = true;
+    dirtRoad = true;
 
     ngAfterViewInit() {
     }
@@ -111,9 +115,16 @@ export class AppComponent implements AfterViewInit {
         };
         if (this.city.length >= 3) {
             this.httpClient.post(url, {city}, options).subscribe(res => {
+
                 let response: any = res;
+
                 this.places = response.body.json.predictions;
                 this.showList = true;
+
+            }, error => {
+
+                console.log('Error: ', error);
+
             });
         }
     }
@@ -129,6 +140,8 @@ export class AppComponent implements AfterViewInit {
                 dirtRoad: true
             }
         };
+
+        console.log(data);
 
         this.httpClient.post(url, {data}).subscribe(res => {
 
@@ -146,6 +159,10 @@ export class AppComponent implements AfterViewInit {
                 this.displayMarker = true;
 
             }
+
+        }, error => {
+
+            console.log('Error: ', error);
 
         });
     }
@@ -176,4 +193,5 @@ export class AppComponent implements AfterViewInit {
         this.showClearButton = true;
         this.displayMarker = true;
     }
+
 }

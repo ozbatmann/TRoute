@@ -75,19 +75,27 @@
                 <h5 style="opacity: 0.5; color: white;">{{texts.roadProfile}}</h5>
                 <div class="roadTypeContainer">
                     <label class="container">{{texts.roadTypes.paidRoad}}
-                        <input ngModel="paidRoad" type="checkbox" style="display: none;" id="tollRoad">
+                        <input [(ngModel)]="tollRoad"
+                               type="checkbox" style="display: none;"
+                               id="tollRoad">
                         <span class="checkmark"></span>
                     </label>
                     <label class="container">{{texts.roadTypes.ferry}}
-                        <input ngModel="ferry" type="checkbox" style="display: none;" id="boatFerry">
+                        <input [(ngModel)]="boatFery" type="checkbox"
+                               style="display: none;"
+                               id="boatFerry">
                         <span class="checkmark"></span>
                     </label>
                     <label class="container">{{texts.roadTypes.tunnel}}
-                        <input ngModel="tunnel" type="checkbox" style="display: none;" id="tunnel">
+                        <input [(ngModel)]="tunnel" type="checkbox"
+                               style="display: none;"
+                               id="tunnel">
                         <span class="checkmark"></span>
                     </label>
                     <label class="container">{{texts.roadTypes.groundRoad}}
-                        <input ngModel="groundRoad" type="checkbox" style="display: none;" id="dirtRoad">
+                        <input [(ngModel)]="dirtRoad" type="checkbox"
+                               style="display: none;"
+                               id="dirtRoad">
                         <span class="checkmark"></span>
                     </label>
                 </div>

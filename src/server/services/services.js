@@ -1,14 +1,20 @@
 const axios = require('axios');
 const Truck = require('../models/truck');
 var googleMapsClient = require('@google/maps').createClient({
-    key: 'AIzaSyBuVr4P3TdZYRerMVlLhQjytKEZNgIV0Zw',
+    key: 'AIzaSyB6hXMYPb15UlHbjck1pfyME3jljqxtxjk',
+    project: "troute",
     Promise: Promise
 });
 
 var searchPlace = async (subStr) => {
     var searchResult;
-    searchResult = await googleMapsClient.placesAutoComplete({input: subStr, types: 'address', language: 'tr'}).asPromise();
-    return searchResult
+    try {
+        searchResult = await googleMapsClient.placesAutoComplete({input: subStr, types: 'address', language: 'tr'}).asPromise();
+        return searchResult;
+    }catch (e) {
+        throw new Error(e.json.error_message);
+    }
+
 };
 
 var calculateRoutes = async (data) => {
@@ -23,8 +29,11 @@ var calculateRoutes = async (data) => {
     nodes = [];
 
     for (var i = 0; i < data.routes.length;i++){
-        var geoCodeResponse = await googleMapsClient.geocode({address:data.routes[i].description}).asPromise();
-
+        try {
+            var geoCodeResponse = await googleMapsClient.geocode({address: data.routes[i].description}).asPromise();
+        } catch (e) {
+           throw new Error(e.json.error_message);
+        }
         var lat = geoCodeResponse.json.results[0].geometry.location.lat;
         var lng = geoCodeResponse.json.results[0].geometry.location.lng;
 
@@ -81,8 +90,7 @@ var calculateRoutes = async (data) => {
             var response = await axios.get(url);
             routesArr.push(response.data.response.route);
         } catch (e) {
-            resultArr.opStatus = false;
-            resultArr.opMessage = "Servise Ulaşılamadı";
+            throw new Error(e.message);
         }
     }
     resultArr.result = routesArr;

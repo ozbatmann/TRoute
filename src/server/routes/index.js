@@ -13,13 +13,17 @@ router.post('/calculate', (req, res, next) => {
     let data = req.body.data;
     services.calculateRoutes(data).then((resultArray) => {
         res.send(resultArray);
+    }).catch((e) => {
+       res.send(e);
     });
 
 });
 
-router.post('/search', (req, res, next)=> {
+router.post('/search', (req, res, next) => {
     services.searchPlace(req.body.city).then((predictions) => {
-        res.send(predictions);
+        res.send(predictions)
+    }).catch((e) => {
+        res.send(e);
     });
 });
 
